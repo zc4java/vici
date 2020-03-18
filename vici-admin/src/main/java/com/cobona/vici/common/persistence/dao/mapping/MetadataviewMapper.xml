@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cobona.vici.common.persistence.dao.MetadataviewMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cobona.vici.common.persistence.model.Metadataview">
+        <id column="id" property="id" />
+        <result column="viewname" property="viewname" />
+        <result column="viewnamecn" property="viewnamecn" />
+        <result column="replacecolumn" property="replacecolumn" />
+        <result column="metadataid" property="metadataid" />
+        <result column="display" property="display" />
+        <result column="update" property="update" />
+        <result column="add" property="add" />
+        <result column="isselect" property="isselect" />
+        <result column="onclick" property="onclick" />
+        <result column="ondblclick" property="ondblclick" />
+        <result column="onfocus" property="onfocus" />
+        <result column="onblur" property="onblur" />
+        <result column="isvalid" property="isvalid" />
+        <result column="updatetime" property="updatetime" />
+        <result column="operator" property="operator" />
+        <result column="operatnum" property="operatnum" />
+        <result column="operatnumbefore" property="operatnumbefore" />
+         <result column="fieldsort" property="fieldsort" />
+        <result column="issort" property="issort" />
+        <result column="imp" property="imp" />
+        <result column="exp" property="exp" />
+         <result column="viewid" property="viewid" />
+        <result column="readonly" property="readonly" />
+        <result column="clickevent" property="clickevent" />
+        <result column="minwidth" property="minwidth" />
+        <result column="defaultvalue" property="defaultvalue" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, viewname, viewnamecn, replacecolumn, metadataid, display, update, add, isselect, onclick, ondblclick, onfocus, onblur, isvalid, updatetime, operator, operatnum, operatnumbefore,fieldsort,issort,imp,exp,viewid,readonly,clickevent,minwidth,defaultvalue
+    </sql>
+
+  <select id="selectViewListBycondtion" resultType="java.util.Map" parameterType="java.lang.String" >
+    select
+    a.id, 
+    a.viewname,
+     a.viewnamecn, 
+     b.tablename, 
+     b.field,
+     b.title,
+     a.replacecolumn, 
+     a.metadataid, 
+     a.display,
+     a.update,
+     a.add, 
+     a.isselect, 
+     a.onclick, 
+      a.ondblclick,
+      a.onfocus, 
+      a.onblur,
+      a.isvalid, 
+      a.updatetime, 
+       a.operator, 
+       a.operatnum, 
+       a.operatnumbefore,
+       a.fieldsort,
+       a.issort,
+       a.imp,
+       a.exp,
+       a.viewid,
+       a.readonly,
+       a.clickevent,
+       a.minwidth,
+       a.defaultvalue
+     from metadataview a ,metadata b
+    where a.metadataid=b.id
+    ${condtion}
+     ;
+    </select>
+     <select id="getTablenameByid" resultType="java.util.Map" parameterType="java.lang.String" >
+			  SELECT
+			max(id) num,
+			tablename   name
+			FROM
+			metadata a
+			where 1=1
+			 ${id}
+			GROUP BY
+			a.tablename;
+    </select>
+      <select id="getTablenamecnBytablename" resultType="java.util.Map" parameterType="java.lang.String" >
+		  SELECT
+			max(id) num,
+			tablenamecn   name
+			FROM
+			metadata a
+			where 1=1
+			${tablename}
+			GROUP BY
+			a.tablename;
+    </select>
+      <select id="getFieldByTablename" resultType="java.util.Map" parameterType="java.lang.String" >
+		 SELECT
+			id num,
+			field   name
+			FROM
+			metadata a
+			where 1=1
+			${tablename}
+    </select>
+     <select id="getTitleByid" resultType="java.util.Map" parameterType="java.lang.String" >
+			  SELECT
+			id num,
+			title   name
+			FROM
+			metadata a
+			where 1=1
+			  ${id}
+    </select>
+    
+      <select id="getViewnameByid" resultType="java.util.Map" parameterType="java.lang.String" >
+			  SELECT
+			max(id) num,
+			viewname   name
+			FROM
+			metadataview a
+			where 1=1
+			 ${id}
+			GROUP BY
+			a.viewname;
+    </select>
+        <select id="getViewnamecnByViewname" resultType="java.util.Map" parameterType="java.lang.String" >
+		 SELECT
+		   id num,
+			viewnamecn   name
+			FROM
+			metadataview a
+			where 1=1
+              ${viewname};
+    </select>
+    	<select id="getTableidsByTablename" resultType="com.cobona.vici.core.node.ZTreeNode">
+		SELECT
+		m1.id AS id,
+	  0 AS pId,
+		m1.field AS NAME,
+		(
+		CASE
+		WHEN (m2.id = 0 OR m2.id IS
+		NULL) THEN
+		'true'
+		ELSE
+		'false'
+		END
+		) as isOpen
+	
+		FROM
+		metadata m1
+		LEFT JOIN
+		(select 0 id,
+      0 pid,
+     tablename ,
+     tablenamecn NAME
+from 
+metadata 
+group by tablename) m2
+		ON m1.tablename= m2.tablename
+	    where ${tablename}
+	 	ORDER BY
+		m1.id ASC
+	</select>
+    <select id="getTableidsByTablenameviewname" resultType="com.cobona.vici.core.node.ZTreeNode">
+	SELECT
+		m1.id AS id,
+	  0 AS pId,
+		m1.field AS NAME,
+		(
+		CASE
+		WHEN (m2.id = 0 OR m2.id IS
+		NULL) THEN
+		'true'
+		ELSE
+		'false'
+		END
+		) as isOpen,
+		(
+		CASE
+		WHEN (m3.id = 0 OR m3.id
+		IS NULL) THEN
+		'false'
+		ELSE
+		'true'
+		END
+		) "checked"
+		FROM
+		metadata m1
+		LEFT JOIN
+		(select 0 id,
+      0 pid,
+     tablename ,
+     tablenamecn NAME
+from 
+metadata where  ${tablename}
+group by tablename) m2
+		ON m1.tablename= m2.tablename
+		left join (
+		SELECT
+		metadataid id		FROM
+		metadataview
+		WHERE  ${viewname}
+		) m3 on m1.id = m3.id
+		ORDER BY
+		m1.id ASC
+	</select>
+</mapper>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+<title>养老服务平台 - 主页</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<link rel="stylesheet"
+	href="${ctxPath}/static/js/plugins/layui/css/layui.css" media="all">
+<link rel="stylesheet"
+	href="${ctxPath}/static/js/plugins/layui/css/global.css" media="all">
+<link href="${ctxPath}/static/css/style.css?v=4.1.0" rel="stylesheet">
+<style>
+.editorHeight{ height: 340px;padding-left: 110px;}
+</style>
+</head>
+
+<body class="fixed-sidebar full-height-layout">
+	<div id="select" class="layui-tab-content" style="padding: 5%;">
+		<form action="" lay-filter="add-form" class="layui-form layui-form-pane" >
+			
+			<template v-for="field in fieldlist">
+				<template v-if="field.update == 1"> 
+					<div class="layui-form-item" >
+						<template v-if="field.field != 'id'&&field.title!='ID'">
+		
+						<div class="">
+							<label class="layui-form-label">{{field.title}}</label>
+		
+							<template v-if="field.inputtype === 'input'">
+								<div class="layui-input-block">
+									<input type="text" v-bind:name="field.field"  v-bind:lay-filter="field.field"
+										v-bind:id="field.field" autocomplete="off" v-bind:lay-verify="field.verifyrole" v-bind:value="field.value" class="layui-input" v-bind:onclick="field.onclick"  v-bind:ondblclick="field.ondblclick" v-bind:onfocus="field.onfocus" v-bind:onblur="field.onblur" v-bind:readonly="field.readonly">
+								</div>
+							</template>
+		
+							<template v-if="field.inputtype === 'select'">
+								<div class="layui-input-block">
+									<select  lay-search v-bind:name="field.field"  v-bind:lay-filter="field.field" v-bind:id="field.field" v-bind:lay-verify="field.verifyrole" v-bind:onclick="field.onclick"  v-bind:ondblclick="field.ondblclick" v-bind:onfocus="field.onfocus" v-bind:onblur="field.onblur" v-bind:readonly="field.readonly">
+										<template v-for="option in field.dictData">
+											<template v-if="option.num == field.value">
+											  <option v-bind:value="option.num" selected="selected">{{option.name}}</option>
+											</template>
+											<template v-else>
+											  <option v-bind:value="option.num" >{{option.name}}</option>
+											</template>
+											
+										</template>
+									</select>
+								</div>
+							</template>
+							<template v-if="field.inputtype === 'radio'">
+								<div class="layui-input-block">
+									<template v-for="(option, index) in field.dictData">
+										<template v-if="option.num == field.value">
+										  <input type="radio"  v-if="index != '0'" v-bind:name="field.field"  v-bind:lay-filter="field.field"  v-bind:value="option.num" v-bind:title="option.name"   checked v-bind:onclick="field.onclick"  v-bind:ondblclick="field.ondblclick" v-bind:onfocus="field.onfocus" v-bind:onblur="field.onblur" v-bind:readonly="field.readonly">
+										</template>
+										<template v-else>
+										  <input type="radio"  v-if="index != '0'" v-bind:name="field.field"  v-bind:lay-filter="field.field"  v-bind:value="option.num" v-bind:title="option.name"  v-bind:onclick="field.onclick"  v-bind:ondblclick="field.ondblclick" v-bind:onfocus="field.onfocus" v-bind:onblur="field.onblur" v-bind:readonly="field.readonly">
+										</template>
+									</template>
+								</div>
+							</template>
+							<template v-if="field.inputtype === 'checkbox1'">
+								<div class="layui-input-block">
+										<template v-for="(option, index) in field.dictData">
+											<input class="layui-hide" lay-ignore type="checkbox" v-if="index == '0'"   v-bind:name="field.field"  v-bind:lay-filter="field.field" v-bind:value="option.num" v-bind:lay-verify="field.verifyrole"  v-bind:title="option.name" checked>
+										 	<template v-if="(','+field.value+',').indexOf(','+option.num+',')!=-1">
+											  <input type="checkbox" v-if="index != '0'"   v-bind:name="field.field"  v-bind:lay-filter="field.field" v-bind:value="option.num" v-bind:lay-verify="field.verifyrole"  v-bind:title="option.name" checked v-bind:onclick="field.onclick"  v-bind:ondblclick="field.ondblclick" v-bind:onfocus="field.onfocus" v-bind:onblur="field.onblur" v-bind:readonly="field.readonly">
+											</template>
+											<template v-else>
+											  <input type="checkbox" v-if="index != '0'"   v-bind:name="field.field"  v-bind:lay-filter="field.field" v-bind:value="option.num" v-bind:lay-verify="field.verifyrole"  v-bind:title="option.name" v-bind:onclick="field.onclick"  v-bind:ondblclick="field.ondblclick" v-bind:onfocus="field.onfocus" v-bind:onblur="field.onblur" v-bind:readonly="field.readonly">
+											</template>
+										</template>
+								</div>
+							</template>
+							<template v-if="field.inputtype === 'checkbox'">
+								<div class="layui-input-block">
+										<template v-for="(option, index) in field.dictData">
+											 <input class="layui-hide" lay-ignore	 type="checkbox" v-if="index == '0'"  lay-skin="primary"  v-bind:name="field.field"  v-bind:lay-filter="field.field" v-bind:value="option.num" v-bind:lay-verify="field.verifyrole"  v-bind:title="option.name" checked >
+										 	 <template v-if="(','+field.value+',').indexOf(','+option.num+',')!=-1">
+											  <input type="checkbox" v-if="index != '0'"  lay-skin="primary" v-bind:name="field.field"  v-bind:lay-filter="field.field" v-bind:value="option.num" v-bind:lay-verify="field.verifyrole"  v-bind:title="option.name" checked v-bind:onclick="field.onclick"  v-bind:ondblclick="field.ondblclick" v-bind:onfocus="field.onfocus" v-bind:onblur="field.onblur" v-bind:readonly="field.readonly">
+											</template>
+											<template v-else>
+											  <input type="checkbox" v-if="index != '0'"  lay-skin="primary" v-bind:name="field.field"  v-bind:lay-filter="field.field" v-bind:value="option.num" v-bind:lay-verify="field.verifyrole"  v-bind:title="option.name" v-bind:onclick="field.onclick"  v-bind:ondblclick="field.ondblclick" v-bind:onfocus="field.onfocus" v-bind:onblur="field.onblur" v-bind:readonly="field.readonly">
+											</template>
+										 	 
+										</template>
+								</div>
+							</template>
+							<template v-if="field.inputtype === 'textarea'">
+								<div class="layui-input-block">
+									<textarea  class="layui-textarea" v-bind:name="field.field"  v-bind:lay-filter="field.field" v-bind:id="field.field" v-bind:lay-verify="field.verifyrole" v-model="field.value" v-bind:onclick="field.onclick"  v-bind:ondblclick="field.ondblclick" v-bind:onfocus="field.onfocus" v-bind:onblur="field.onblur" v-bind:readonly="field.readonly"></textarea>
+								</div>
+							</template>
+							<!-- <template v-if="field.inputtype === 'switch'">
+								<div class="layui-input-block">
+									<input type="checkbox" value="1"  lay-skin="switch"  v-bind:name="field.field"  v-bind:lay-filter="field.field"  v-bind:id="field.field" lay-filter="switchTest" title="开关" v-model="field.field">
+								</div>
+							</template> -->
+							
+							<template v-if="field.inputtype === 'editor'">
+							  <div class="form-group">
+		                          <textarea v-bind:name="field.field" style="width:100%; height:200px;display:none" v-bind:lay-filter="field.field" v-model="field.value">{{field.value}}</textarea>
+		                      </div>
+		                      <div  v-bind:id="field.field"  v-bind:lay-filter="field.field" class="editorHeight"></div>  
+						    </template>
+							<template v-if="field.inputtype === 'tree'">
+								<div class="layui-input-block">
+									<input type="text" v-bind:name="field.field"  v-bind:lay-filter="field.field"
+										v-bind:id="field.field" autocomplete="off" v-bind:lay-verify="field.verifyrole" v-bind:value="field.value" class="layui-input" v-bind:onclick="field.onclick"  v-bind:ondblclick="field.ondblclick" v-bind:onfocus="field.onfocus" v-bind:onblur="field.onblur" v-bind:readonly="field.readonly">
+								</div>
+							</template>
+							<template v-if="field.inputtype === 'rate'">
+							  <div class="layui-input-block">
+		                       <div  v-bind:id="field.field"  v-bind:lay-filter="field.field"  >
+		                           </div>
+		                      </div>
+		                      <input type="hidden" v-bind:name="field.field"  v-bind:lay-filter="field.field"
+									  v-bind:value="field.value" class="layui-input" style="display: none">
+						</template>
+						</div>
+						</template>
+						
+							
+						
+						<template v-if="field.field == 'id'||field.title=='ID'">
+							<input type="hidden" v-bind:name="field.field"  v-bind:lay-filter="field.field"
+									v-bind:id="field.field" autocomplete="off"  v-bind:value="field.value" class="layui-input" style="display: none">
+						</template>
+					 </div>
+				</template>
+			</template>
+
+			<div class="layui-form-item">
+			    <div class="layui-input-block">
+			      <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+			      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			    </div>
+			 </div>
+			
+		</form>
+	</div>
+	
+	<script src="${ctxPath}/static/js/jquery.min.js?v=2.1.4"></script>
+	<script src="${ctxPath}/static/js/plugins/layui/layui.js"
+		charset="utf-8"></script>
+
+	<script src="${ctxPath}/static/js/vue.min.js"></script>
+	<script src="${ctxPath}/static/js/common/Feng.js"></script>
+	<script src="${ctxPath}/static/js/common/ajax-object.js"></script>
+	<script src="${ctxPath}/static/js/common/common.js"></script>
+	<script src="${ctxPath}/static/js/custom/custom_common.js"></script>
+	<script src="${ctxPath}/static/js/custom/${tablename}_edit.js"></script>
+	<script type="text/javascript" src="${ctxPath}/static/js/plugins/wangEditor/wangEditor.js"></script>
+	<script type="text/javascript" src="${ctxPath}/static/js/plugins/xss/xss.js"></script>
+	<script>
+		var vm = new Vue({
+	        el: '#select',
+	        data: ${fieldlist},
+	        mounted: function(){
+				  init(); 
+			  }
+	       /*  mounted: function(){
+	        	loadSelectbyid("sex","性别");
+            } */
+	        
+	    })
+	
+		var userid=${user.userid};
+		var deptid=${user.deptid};
+		var roleList=${user.roleList};
+		layui.use(['form', 'rate','upload','laydate'], function(){
+			  var form = layui.form
+			  ,layer = layui.layer
+			  ,laydate = layui.laydate
+			  ,rate = layui.rate
+			  ,upload = layui.upload;
+			  //日期
+			  ${date}
+			  
+			  
+			  //评分
+			  ${rate}
+			  
+			  //上传
+			  ${upload}
+			 
+			/*   //自定义验证规则
+			  form.verify({
+			    title: function(value){
+			      if(value.length < 5){
+			        return '标题至少得5个字符啊';
+			      }
+			    }
+			    ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+			    ,content: function(value){
+			      layedit.sync(editIndex);
+			    }
+			  }); */
+			  
+		
+			  //监听提交
+			  form.on('submit(demo1)', function(data){
+			  /*   layer.alert(JSON.stringify(data.field), {
+			      title: '最终的提交信息'  
+			    }) */
+			  //数据提交前对数据进行整理
+			  debugger;
+			    collectdate(data);
+			    //debugger;
+			    $.ajax({
+			        type: "post",
+			        url: '/generaltable/${tablename}/save',
+			        dataType: "json",
+			        async: false,
+			        data: data.field,
+					/* beforeSend: function(data) {	
+					}, */
+			        success: function(data1) {
+			        	
+			        	afterEditSaveSuccess(data);
+			        	layer.msg(data1.message,function(){
+			        		parent.layer.closeAll();
+			        	});
+			        },
+			        error: function(data) {
+			        	layer.msg('保存失败');
+			        }
+			    });
+			    return false;
+			  });
+			  
+			  
+			});
+	
+		${editor}
+		function HTMLDecode(text) { 
+			var temp = document.createElement("div"); 
+			temp.innerHTML = text; 
+			var output = temp.innerText || temp.textContent; 
+			temp = null; 
+			return output; 
+		} 
+	</script>
+
+	
+</body>
+
+</html>

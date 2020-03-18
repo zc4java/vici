@@ -1,0 +1,362 @@
+<!-- <div>
+	
+</div>
+ -->
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="float-e-margins">
+				<div class="ibox-title">
+					<h5>${tablenamecn}</h5>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div id="select">
+		<form class="layui-form ibox-title layui-form-pane" action="">
+			<div class="layui-form-item">
+				<template v-for="field in fieldlist"> <template
+					v-if="field.isselect === 1">
+
+				<div class="layui-inline">
+					<label class="layui-form-label">{{field.title}}</label>
+
+					<template v-if="field.inputtype === 'input'">
+					<div class="layui-input-inline">
+
+						<input type="text" v-bind:name="field.field"
+							v-bind:id="field.field" autocomplete="off" class="layui-input">
+					</div>
+					</template>
+
+					<template v-if="field.inputtype === 'select'||field.inputtype === 'radio'">
+					<div class="layui-input-block">
+						<select v-bind:name="field.field" v-bind:id="field.field"
+							v-bind:lay-filter="field.field">
+							<template v-for="option in field.dictData">
+							<option v-bind:value="option.num">{{option.name}}</option>
+							</template>
+						</select>
+					</div>
+					</template>
+					
+
+				</div>
+				</template> </template>
+				<!--排序字段-->
+				<input type="hidden" name="sort" id="sort" class="layui-input"
+					style="display: none"> <input type="hidden" name="order"
+					id="order" class="layui-input" style="display: none">
+			</div>
+			<div id="menu">
+				<template v-for="field in permissionList"> <template
+					v-if="field.bt === 'add'">
+				<button class="layui-btn layui-btn-normal" lay-submit
+					lay-filter="formSelect" onclick="add()" id="addBt">
+					<i class="layui-icon layui-icon-add-1"></i>新增
+				</button>
+				</template> <template v-else-if="field.bt === 'update'">
+				<button class="layui-btn layui-btn-normal" lay-submit
+					lay-filter="formSelect" onclick="update()" id="editBt">
+					<i class="layui-icon layui-icon-edit"></i>修改
+				</button>
+				</template> <template v-else-if="field.bt === 'delete'">
+				<button class="layui-btn layui-btn-normal" lay-submit
+					lay-filter="formSelect" onclick="del()" id="delBt">
+					<i class="layui-icon layui-icon-delete"></i>删除
+				</button>
+				</template> <template v-else-if="field.bt === 'list'">
+				<button class="layui-btn layui-btn-normal" lay-submit
+					lay-filter="formSelect" id="qureyBt">
+					<i class="layui-icon layui-icon-search"></i>查询
+				</button>
+				</template> <template v-else-if="field.bt === 'detail'">
+				<button class="layui-btn layui-btn-normal" lay-submit
+					lay-filter="formSelect" onclick="detail()" id="detailBt">
+					<i class="layui-icon">&#xe654;</i>详情
+				</button>
+				</template> <template v-else-if="field.bt === 'import'">
+				<button class="layui-btn layui-btn-normal" lay-submit
+					lay-filter="formSelect"  id="importBt">
+					<i class="layui-icon layui-icon-upload-drag"></i>导入
+				</button>
+				</template> <template v-else-if="field.bt === 'export'">
+				<button class="layui-btn layui-btn-normal" lay-submit
+					lay-filter="formSelect"  id="exportBt">
+					<i class="layui-icon ayui-icon-download-circle"></i>导出
+				</button>
+				</template> <template v-else-if="field.bt === 'downtemp'">
+				<button class="layui-btn layui-btn-normal" lay-submit
+					lay-filter="formSelect"  id="downtempBt" v-bind:value="field.name">
+					<i class="layui-icon layui-icon-file"></i>{{field.name}}
+				</button>
+				</template> <template v-else>
+				<button class="layui-btn layui-btn-normal" lay-submit
+					lay-filter="formSelect"  v-bind:id="field.bt" v-bind:value="field.name">
+					<i v-bind:class="field.icon"></i>{{field.name}}
+				</button>
+				</template> </template>
+			</div>
+		</form>
+
+	</div>
+
+	<div class="ibox-title">
+		<table class="layui-hide" id="table" lay-filter="table"></table>
+	</div>
+
+	<script src="${ctxPath}/static/js/common/common.js"></script>
+	<script src="${ctxPath}/static/js/custom/custom_common.js"></script>
+	<script src="${ctxPath}/static/js/custom/${tablename}_list.js"></script>
+	<script>
+	   
+	    	var vm = new parent.Vue({
+		        el: '#select',
+		        data: ${fieldlist},
+		        mounted: function(){
+					  init(); 
+				  }
+		     
+		        
+		    })
+	   
+		
+		var layuiTable = null;
+	    var layui=parent.layui;
+		layui.use('form', function(){
+			
+		 var form= layui.form;
+		 form.render();
+		  //监听提交
+		 form.on('submit(formSelect)', function(data){
+			 var bt=$(this).attr('id');
+			 if(bt==="exportBt"){//excel导出
+				var url="/generaltable/${tablename}/export?limit=10&page=1";
+				for(let i in data.field){
+					url+="&"+i+"="+data.field[i];
+			    }
+				window.location.href =url;
+				 return false;
+			 }
+			 if(bt==="downtempBt"){//excel模版下载
+				var url="/generaltable/${tablename}/export?limit=10&page=1&temp=1";
+				for(let i in data.field){
+					url+="&"+i+"="+data.field[i];
+			    }
+				window.location.href =url;
+				return false;
+			}
+			 
+			 if(bt!=="qureyBt"){
+				 doButtonClick(bt,data);
+				 return false;
+			 }
+		    /* layer.msg(JSON.stringify(data.field)); */
+		     var a = [${showField}];
+		    if(${relation.toolbar}==1){
+		    	a[0].push({fixed: 'right',  align:'center', title: '操作',minWidth: 200,toolbar: '#barDemo'});
+		    }
+			
+		    layui.use('table', function() {
+				var table = layui.table;
+				var url='/generaltable/${tablename}/list';
+				//展示已知数据
+				table.render({
+					elem : '#table',
+					url:url,
+					initSort: {'field':data.field.sort,'type':data.field.order},//字段排序
+					where:data.field,
+					cols : a,
+					/* skin : 'line' //表格风格
+					, */
+					cellMinWidth: 90,
+					id:"id",
+					even : true,
+					page : true //是否显示分页
+					,
+					limits : [ 5, 10, 20 ],
+					limit : 10
+				//每页默认显示的数量
+				});
+				table.on('sort(table)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+				  console.log(obj.field); //当前排序的字段名
+				  console.log(obj.type); //当前排序类型：desc（降序）、asc（升序）、null（空对象，默认排序）
+				  if(obj.type!==null){
+					  $('#sort').val(obj.field);
+					  $('#order').val(obj.type);  
+				  }else{
+					  $('#sort').val(null);
+					  $('#order').val(obj.type);  
+				  }
+				  $('#qureyBt').click(); 
+				});
+				
+					table.on('tool(table)', function(obj){
+					   toobarDoing(obj);
+					  });
+			
+				
+				layuiTable=table;
+			});
+		    return false;
+		  });
+		
+			
+			  $('#qureyBt').click(); 
+	
+		 
+		  
+		});
+		
+		layui.use('upload', function(){
+			  var upload = layui.upload;
+			   
+			  //执行实例
+			  var uploadInst = upload.render({
+			    elem: '#importBt' //绑定元素
+			    ,accept:'file'
+			    ,exts: 'xls'
+			    ,acceptMime:'application/vnd.ms-excel'
+			    ,size:20000
+			    ,url: '/generaltable/${tablename}/import' //上传接口
+			    ,done: function(res){
+			     	 //上传完毕回调
+			     	 debugger;
+			      	if(res.code===200){
+			      		layer.msg(res.message);
+			      	}else if(res.code===333){
+			      		var message=JSON.parse(res.message)
+			      		layer.open({
+			      		  type: 1,
+			      		  skin: 'layui-layer-rim', //加上边框
+			      		  area: ['420px', '240px'], //宽高
+			      		  content: "<h3 class='site-h3' style='text-align: center;'>"+message.msg+"</h3></br><div style='text-align: center;'><a href='/generaltable/download/"+message.filename+"'><button   class='layui-btn layui-btn-normal'><i class='layui-icon'>&#xe601;</i>下载文件</button></a><div>"
+			      		});
+			      	}
+			    	
+			    }
+			    ,error: function(){
+			      //请求异常回调
+			    }
+			  });
+			});
+	
+		function add(){
+			 layer.open({
+				  type: 2,
+				  title: '${tablenamecn}',
+				  shadeClose: true,
+				  scrollbar: true, 
+				  maxmin: true, 
+				  fix: false, 
+				  shade: 0.8,
+				  area: ['80%', '80%'],
+				  content: '/generaltable/${tablename}/add', //iframe的url
+				  end:function(){
+					  $('#qureyBt').click(); 
+				  }
+				}); 
+			 
+		    return false;
+		  };
+		  
+		  function update(){
+			  	 var selectLength=layuiTable.checkStatus('id').data.length;
+			  	 if(selectLength==0){
+			  		layer.msg('请选择一行');
+			  		return;
+			  	 }
+			  	 if(selectLength>1){
+				  		layer.msg('不可多选');
+				  		return;
+				   }
+			  	 debugger;
+			     var selectId=layuiTable.checkStatus('id').data[0].id;
+				 layer.open({
+					  type: 2,
+					  title: '${tablenamecn}',
+					  shadeClose: true,
+					  shade: 0.8,
+					  area: ['80%', '80%'],
+					  content: '/generaltable/${tablename}/add?id='+selectId, //iframe的url
+					  end:function(){
+						  $('#qureyBt').click(); 
+					  }
+					}); 
+				 
+			    return false;
+			  };
+			  function detail(){
+				  	 var selectLength=layuiTable.checkStatus('id').data.length;
+				  	 if(selectLength==0){
+				  		layer.msg('请选择一行');
+				  		return;
+				  	 }
+				  	 if(selectLength>1){
+					  		layer.msg('不可多选');
+					  		return;
+					   }
+				     var selectId=layuiTable.checkStatus('id').data[0].id;
+					 layer.open({
+						  type: 2,
+						  title: '${tablenamecn}',
+						  shadeClose: true,
+						  shade: 0.8,
+						  area: ['80%', '80%'],
+						  content: '/generaltable/${tablename}/detail/'+selectId, //iframe的url
+						  end:function(){
+							  $('#qureyBt').click(); 
+						  }
+						}); 
+					 
+				    return false;
+				  };
+			  function del(){
+				  	 var selectLength=layuiTable.checkStatus('id').data.length;
+				  	 if(selectLength==0){
+				  		layer.msg('至少选择一行');
+				  		return;
+				  	 }
+				  	 if(selectLength>1){
+					  		layer.msg('不可多选');
+					  		return;
+					   }
+				     var selectId=layuiTable.checkStatus('id').data[0].id;
+				     
+				     layer.confirm('确认删除？', {
+				    	  btn: ['确定','取消'] //按钮
+				    	}, function(){
+				    		 $.ajax({
+							        type: "get",
+							        url: '/generaltable/${tablename}/vdelete?id='+selectId,
+							     	data:{},
+							        async: false,
+							        
+									/* beforeSend: function(data) {	
+									}, */
+							        success: function(data) {
+							        	layer.msg(data.message);
+							        	 $('#qureyBt').click(); 
+							        },
+							        error: function(data) {
+							        	layer.msg('删除失败');
+							        }
+							    });
+				    	  
+				    	  
+				    	}, function(){
+				    	  
+				    	});
+					
+					 
+				    return false;
+				  };
+		
+	</script>
+	${relation.toolbarscript}
+	${templetScript}
+</div>
+

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+
+<body class="fixed-sidebar full-height-layout">
+	<div id="app" class="layui-tab-content" style="padding:5%;">
+		  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+			 <template v-for="field in fieldlist"> 
+				<template v-if="field.add == 1">
+					<template v-if="field.field != 'id'&&field.title!='ID'">
+						<template v-if="field.inputtype === 'input'">
+						  <el-form-item v-bind:label="field.title"  v-bind:prop="field.field">
+						    <el-input v-model="ruleForm.name"></el-input>
+						  </el-form-item>
+						 </template>
+					</template>
+				</template>
+			</template>
+			  
+		  </el-form>
+	
+		<!-- <form class="layui-form layui-form-pane" action="">
+			<template v-for="field in fieldlist"> 
+				<template v-if="field.add == 1"> 
+				<div class="layui-form-item" >
+					<template v-if="field.field != 'id'&&field.title!='ID'">
+					
+					<div class="">
+						<label class="layui-form-label">{{field.title}}</label>
+	
+						<template v-if="field.inputtype === 'input'">
+						<div class="layui-input-block">
+	
+							<input type="text" v-bind:name="field.field" 
+								v-bind:id="field.field" autocomplete="off" v-bind:lay-verify="field.verifyrole" class="layui-input" v-bind:onclick="field.onclick"  v-bind:ondblclick="field.ondblclick" v-bind:onfocus="field.onfocus" v-bind:onblur="field.onblur">
+						</div>
+						</template>
+	
+						<template v-if="field.inputtype === 'select'">
+							<div class="layui-input-block">
+								<select v-bind:name="field.field" v-bind:id="field.field"   v-bind:lay-verify="field.verifyrole" v-bind:onclick="field.onclick"  v-bind:ondblclick="field.ondblclick" v-bind:onfocus="field.onfocus" v-bind:onblur="field.onblur">
+									<option v-for="(option, index) in field.dictData" :value="option.num">{{ option.name }}</option>
+								</select>
+							</div>
+						</template>
+						
+						<template v-if="field.inputtype === 'radio'">
+							<div class="layui-input-block">
+								<input v-for="(option, index) in field.dictData" type="radio"  v-if="index != '0'"  v-bind:name="field.field" v-bind:value="option.num" v-bind:title="option.name" v-bind:onclick="field.onclick"  v-bind:ondblclick="field.ondblclick" v-bind:onfocus="field.onfocus" v-bind:onblur="field.onblur">
+							</div>
+							
+						</template>
+						
+						 <template v-if="field.inputtype === 'checkbox'">
+							<div class="layui-input-block">
+								<input v-for="(option, index) in field.dictData" type="checkbox" v-if="index != '0'"   v-bind:name="field.field" v-bind:value="option.num" v-bind:lay-verify="field.verifyrole" lay-skin="primary" v-bind:title="option.name" v-bind:onclick="field.onclick"  v-bind:ondblclick="field.ondblclick" v-bind:onfocus="field.onfocus" v-bind:onblur="field.onblur">
+							</div>
+						</template>
+						 <template v-if="field.inputtype === 'checkbox1'">
+							<div class="layui-input-block">
+									<input v-for="(option, index) in field.dictData" type="checkbox" v-if="index != '0'"   v-bind:name="field.field" v-bind:value="option.num"   v-bind:title="option.name" >
+							</div>
+						</template>
+						
+						<template v-if="field.inputtype === 'textarea'">
+							<div class="layui-input-block">
+								<textarea  class="layui-textarea" v-bind:name="field.field"  v-bind:id="field.field" v-bind:lay-verify="field.verifyrole" v-bind:onclick="field.onclick"  v-bind:ondblclick="field.ondblclick" v-bind:onfocus="field.onfocus" v-bind:onblur="field.onblur"></textarea>
+							</div>
+						</template>
+						<template v-if="field.inputtype === 'switch'">
+							<div class="layui-input-block">
+								<input type="checkbox" checked=""  lay-skin="switch"  v-bind:name="field.field"  v-bind:id="field.field" lay-filter="switchTest" title="开关">
+							</div>
+						</template>
+						
+						<template v-if="field.inputtype === 'editor'">
+							  <div class="form-group">
+		                       <div  v-bind:id="field.field" class="editorHeight" >
+		                           </div>
+		                      </div>
+						</template>
+						
+					</div>
+					</template>
+				 </div>
+				</template>
+			</template>
+
+			<div class="layui-form-item">
+			    <div class="layui-input-block">
+			      <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+			      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			    </div>
+			 </div>
+			
+		</form> -->
+	</div>
+	
+	<script src="${ctxPath}/static/js/jquery.min.js?v=2.1.4"></script>
+	 <script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<script src="${ctxPath}/static/js/common/common.js"></script>
+	<script src="${ctxPath}/static/js/custom/${tablename}_add.js"></script>
+	<script type="text/javascript" src="${ctxPath}/static/js/plugins/wangEditor/wangEditor.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script>
+		var vm = new Vue({
+	        el: '#app',
+	        data: {'fieldlist':${fieldlist.fieldlist},
+	                ruleForm: {
+	                 name: ''
+	                },
+	               rules: {
+	                 name: [
+	                   { required: true, message: '请输入活动名称', trigger: 'blur' },
+	                   { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+	                 ]
+	               }
+	             }
+	    })
+	 
+		
+		
+	</script>
+
+	
+</body>
+
+</html>

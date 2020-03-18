@@ -1,0 +1,85 @@
+@layout("/common/_container.html"){
+<link href="${ctxPath}/static/js/plugins/layui/css/layui.css" rel="stylesheet">
+<div class="ibox float-e-margins">
+	<div class="ibox-content">
+		<div class="form-horizontal" id="menuInfoForm">
+		
+			<input type="hidden" id="id" value="">
+
+			<div class="row">
+				<div class="col-sm-6 b-r">
+					<#input id="name" name="名称" underline="true" />
+					<#input id="code" name="菜单编号" underline="true" />
+					<#input id="pcodeName" name="父级编号" underline="true"
+							hidden="pcode" readonly="readonly"
+							clickFun="MenuInfoDlg.showMenuSelectTree(); return false;"
+							style="background-color: #ffffff !important;"
+							selectFlag="true" selectId="pcodeTreeDiv" selectTreeId="pcodeTree" selectStyle="width:244px !important;"/>
+					<#select id="isshortcut" name="是否是快捷方式">
+						<option value="0">不是</option>
+						<option value="1">是</option>
+					</#select>
+					<#input id="shortcutname" name="快捷方式名称" underline="true"  />
+					<#input id="componentname" name="Vue组件名" underline="true" />
+				</div>
+				<div class="col-sm-6">
+					<#input id="url" name="请求地址" underline="true" />
+					<#input id="num" name="排序" underline="true" />
+					<#input id="icon" name="图标" underline="true"  />
+                    <#select id="ismenu" name="是否是菜单">
+						<option value="1">是</option>
+						<option value="0">不是</option>
+					</#select>
+					
+					<#select id="isadmin" name="是否是后台菜单" underline="true">
+						<option value="1">是</option>
+						<option value="0">不是</option>
+					</#select>
+                   <#input id="objectname" name="绑定对象名"  underline="true" />
+
+				</div>
+			</div>
+
+			<div class="row btn-group-m-t">
+				<div class="col-sm-10">
+					<#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="MenuInfoDlg.addSubmit()"/>
+					<#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="MenuInfoDlg.close()"/>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<script src="${ctxPath}/static/modular/system/menu/menu_info.js"></script>
+<script src="${ctxPath}/static/js/plugins/layui/layui.js"></script>
+<script type="text/javascript">
+
+layui.config({
+    base:'${ctxPath}/static/js/plugins/layui/mods/'
+}).use('mods',function(mods){
+     mods(['layer','iconPicker'],function(layer,umd1){
+    	 var iconPicker = layui.iconPicker;
+         
+         iconPicker.render({
+             // 选择器，推荐使用input
+             elem: '#icon',
+             // 数据类型：fontClass/unicode，推荐使用fontClass
+             type: 'fontClass',
+             // 是否开启搜索：true/false
+             search: true,
+             // 点击回调
+             click: function (data) {
+                 console.log(data);
+             }
+         });
+
+     });
+});
+
+
+
+
+
+
+</script>
+@}

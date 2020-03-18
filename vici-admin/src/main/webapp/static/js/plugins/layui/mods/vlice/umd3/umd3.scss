@@ -1,0 +1,38 @@
+.lay-vlice-umd3{
+    /*
+        Css注释的位置根据花括号来确定
+        这条注释会编译出一个无用的class样式
+     */
+    &-box{
+        // Scss变量 - 这条注释不会编译到css中
+        $box-width:100%;
+        $box-height:200px;
+
+        background-color: #d68a4b;
+        width:$box-width;
+        height:$box-height;
+
+        span{
+            /* Css注释 - 这条注释会编译到css文件中 */
+            display: inline-block;
+            text-align: center;
+            width:$box-width;
+            line-height: $box-height;
+            font-size: 3.5em;
+
+            // Scss混合器的使用 - 相当于function + return
+            @mixin size_rem($num) {
+                // Scss运算符前后必须空格
+                font-size: $num + rem;
+            }
+            &::after{
+                content: '] 来自css的问候';
+                @include size_rem(1);
+            }
+            &::before{
+                content:'来自css的问候 [';
+                @include size_rem(1);
+            }
+        }
+    }
+}

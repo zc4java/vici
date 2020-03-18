@@ -1,0 +1,64 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${item.id}">
+            <input type="hidden" id="viewname" value="${item.viewname}">
+            <input type="hidden" id="tablenamehid" value="${itemtable.tablename}">
+            <input type="hidden" id="metadataidhid" value="${item.metadataid}">
+            <input type="hidden" id="displayhid" value="${item.display}">
+            <input type="hidden" id="updatehid" value="${item.update}">
+            <input type="hidden" id="addhid" value="${item.add}">
+            <input type="hidden" id="isselecthid" value="${item.isselect}">
+            <input type="hidden" id="issorthid" value="${item.issort}">
+            <input type="hidden" id="imphid" value="${item.imp}">
+            <input type="hidden" id="exphid" value="${item.exp}">
+            <input type="hidden" id="readonlyhid" value="${item.readonly}">
+            <input type="hidden" id="viewidhid" value="${item.viewid}">
+            
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#select id="viewnameselect" name="已有视图名" underline="true"  onchangeFun="MetadataviewInfoDlg.changeviewname(this)"/>
+                            <#input id="viewnamecn" name="视图名中文" value="${item.viewnamecn}" underline="true"/>
+                            <#select id="tablename" name="数据库表" underline="true" onchangeFun="MetadataviewInfoDlg.changetablename(this)"/>
+                            <#select id="metadataid" name="字段名" underline="true" onchangeFun="MetadataviewInfoDlg.changetableid(this)"/>
+                            <#input id="fieldtitle" name="字段注释" underline="true" value="${itemtable.title}" />
+                            <#input id="replacecolumn" name="重写字段" underline="true" value="${item.replacecolumn}" />
+                            <#select id="issort" name="开启列表排序" value="${item.issort}" underline="true"/>
+                            <#select id="imp" name="excel导入" value="${item.imp}" underline="true"/>
+                            <#select id="exp" name="excel导出" value="${item.exp}" underline="true"/>
+                            <#select id="readonly" name="是否只读" value="${item.readonly}" underline="true"/>
+                           <#input id="templet" name="自定义模版名称" value='${item.templet}' underline="true"/>
+                           <#input id="defaultvalue" name="默认值" value='${item.defaultvalue}' underline="true"/>
+                           <#textarea id="templetscript" name="自定义模版脚本" value="${item.templetscript}" underline="true"/>
+                </div>
+
+                <div class="col-sm-6">
+                            <#select id="display" name="是否在列表展示" value="${item.display}" underline="true"/>
+                            <#select id="update" name="是否在更新页面展示" value="${item.update}" underline="true"/>
+                            <#select id="add" name="是否在添加页面展示" value="${item.add}" underline="true"/>
+                            <#select id="isselect" name="是否可查询" value="${item.isselect}" />
+                            <#input id="onclick" name="鼠标单击执行方法" value="${item.onclick}" underline="true"/>
+                            <#input id="ondblclick" name="鼠标双击执行方法" value="${item.ondblclick}" underline="true"/>
+                            <#input id="onfocus" name="当元素获得焦点时执行方法" value="${item.onfocus}" underline="true"/>
+                            <#input id="onblur" name="元素失去焦点时执行方法" value="${item.onblur}" underline="true"/>
+                            <#input id="fieldsort" name="字段页面显示顺序" value="${item.fieldsort}" underline="true"/>
+                            <#select id="viewid" name="是否为主id" value="${item.viewid}"  underline="true"/>
+                            <#input id="clickevent" name="单元格点击事件" value="${item.clickevent}" underline="true"/>
+                           <#input id="minwidth" name="单元格最小宽度" value="${item.minwidth}" underline="true"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="MetadataviewInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="MetadataviewInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/metadataview/metadataview/metadataview_info_edit.js"></script>
+@}

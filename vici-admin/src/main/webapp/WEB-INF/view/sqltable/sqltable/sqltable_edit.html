@@ -1,0 +1,35 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${item.id}">
+			<input type="hidden" id="typeView" value="${item.type}">
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="name" name="名称" value="${item.name}" underline="true"/>
+                            <#input id="params" name="参数" value="${item.params}" />
+                </div>
+
+                <div class="col-sm-6">
+                	  <#select id="type" name="语句类型" value="${item.type}"></#select>
+                </div>
+            </div>
+           <div class="row">
+			 <div class="col-sm-6">
+ 				 <#textarea id="sql" name="sql语句" value="${item.sql}"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="SqltableInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="SqltableInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/sqltable/sqltable/sqltable_info.js"></script>
+@}

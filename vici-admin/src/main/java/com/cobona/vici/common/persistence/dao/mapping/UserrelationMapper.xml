@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cobona.vici.common.persistence.dao.UserrelationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cobona.vici.common.persistence.model.Userrelation">
+        <id column="id" property="id" />
+        <result column="menuid" property="menuid" />
+        <result column="userid" property="userid" />
+        <result column="adduid" property="adduid" />
+        <result column="starttime" property="starttime" />
+        <result column="endtime" property="endtime" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, menuid, userid, adduid, starttime, endtime, status
+    </sql>
+
+</mapper>

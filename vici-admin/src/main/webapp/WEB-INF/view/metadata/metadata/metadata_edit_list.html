@@ -1,0 +1,37 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${item.id}">
+            <input type="hidden" id="tablenamehid" value="${item.tablename}">
+            <input type="hidden" id="tablenamecnhid" value="${item.tablenamecn}">
+
+            <div class="row">
+                <div class="col-sm-3 ">
+                 <#NameCon id="tablename" readonly="true" name="表名" />
+                 </div>
+                  <div class="col-sm-3"> 
+                   <#NameCon id="tablenamecn" readonly="true" name="表中文" />
+                 </div >
+                  <div class="col-sm-3">						
+                   <#button name="新增行" icon="fa-plus" clickFun="MetadataInfoDlg.AddMetadata()"/>
+                   <#button name="删除行" icon="fa-remove" clickFun="MetadataInfoDlg.DelMetadataEdit()"/>
+               </div>
+            </div>
+              <div class="table-responsive">  
+           <#table id="MetadataTable" style="word-break:break-all; word-wrap:break-all;" />
+           </div>
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="保存" id="save" icon="fa-check" clickFun="MetadataInfoDlg.saveData()"/>
+                    <#button btnCss="info" name="保存并关闭" id="ensure" icon="fa-check" clickFun="MetadataInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="MetadataInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/metadata/metadata/metadata_info_list.js"></script>
+@}

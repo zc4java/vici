@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cobona.vici.common.persistence.dao.SunServicecategoryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cobona.vici.common.persistence.model.SunServicecategory">
+        <id column="id" property="id" />
+        <result column="pid" property="pid" />
+        <result column="pids" property="pids" />
+        <result column="name" property="name" />
+        <result column="num" property="num" />
+        <result column="isvalid" property="isvalid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, pid, pids,name, num, isvalid
+    </sql>
+
+<select id="servicecategoryTreeList" resultType="com.cobona.vici.core.node.ZTreeNode">
+		SELECT
+		m1.id AS id,
+		(
+		CASE
+		WHEN (m2.id = 0 OR m2.id IS NULL) THEN
+		0
+		ELSE
+		m2.id
+		END
+		) AS pId,
+		m1. NAME
+		AS NAME,
+		(
+		CASE
+		WHEN (m2.id = 0 OR m2.id IS NULL) THEN
+		'true'
+		ELSE
+		'false'
+		END
+		) as isOpen
+		FROM
+		sun_servicecategory m1
+		LEFT JOIN sun_servicecategory m2 ON m1.pid = m2. id
+		ORDER BY
+		m1.id ASC
+	</select>
+	<select id="servicecategoryTreeListByCategoryType" resultType="com.cobona.vici.core.node.ZTreeNode">
+		SELECT
+		m1.id AS id,
+		(
+		CASE
+		WHEN (m2.id = 0 OR m2.id IS NULL) THEN
+		0
+		ELSE
+		m2.id
+		END
+		) AS pId,
+		m1. NAME
+		AS NAME,
+		(
+		CASE
+		WHEN (m2.id = 0 OR m2.id IS NULL) THEN
+		'true'
+		ELSE
+		'false'
+		END
+		) as isOpen
+		FROM
+		sun_servicecategory m1
+		LEFT JOIN sun_servicecategory m2 ON m1.pcode = m2. CODE
+		where m1.servicecategory=#{categoryType}
+		ORDER BY
+		m1.id ASC
+	</select>
+
+	<select id="servicecategoryTreeListByProviderId" resultType="com.cobona.vici.core.node.ZTreeNode">
+		SELECT
+		m1.id AS id,
+		(
+		CASE
+		WHEN (m2.id = 0 OR m2.id IS NULL) THEN
+		0
+		ELSE
+		m2.id
+		END
+		) AS pId,
+		m1. NAME AS NAME,
+		(
+		CASE
+		WHEN (m2.id = 0 OR m2.id IS
+		NULL) THEN
+		'true'
+		ELSE
+		'false'
+		END
+		) as isOpen,
+		(
+		CASE
+		WHEN (m3.servicecategoryid = 0 OR m3.servicecategoryid
+		IS NULL) THEN
+		'false'
+		ELSE
+		'true'
+		END
+		) "checked"
+		FROM
+		sun_servicecategory m1
+		LEFT JOIN
+		sun_servicecategory m2
+		ON m1.pid = m2. id
+		left join (
+		SELECT
+		servicecategoryid
+		FROM
+		sun_providercateoryrelation
+		WHERE
+		serviceproviderid =#{providerid}
+		) m3 on m1.id = m3.servicecategoryid
+		ORDER BY
+		m1.id ASC
+	</select>
+	
+	<select id="servicedeptTreeList" resultType="com.cobona.vici.core.node.ZTreeNode">
+		SELECT
+		m1.id AS id,
+		(
+		CASE
+		WHEN (m2.id = 0 OR m2.id IS NULL) THEN
+		0
+		ELSE
+		m2.id
+		END
+		) AS pId,
+		m1.simplename
+		AS NAME,
+		(
+		CASE
+		WHEN (m2.id = 0 OR m2.id IS NULL) THEN
+		'true'
+		ELSE
+		'false'
+		END
+		) as isOpen
+		FROM
+		dept m1
+		LEFT JOIN dept m2 ON m1.pid = m2. id
+		ORDER BY
+		m1.id ASC
+	</select>
+	<select id="servicedeptTreeListByProviderId" resultType="com.cobona.vici.core.node.ZTreeNode">
+		SELECT
+		m1.id AS id,
+		(
+		CASE
+		WHEN (m2.id = 0 OR m2.id IS NULL) THEN
+		0
+		ELSE
+		m2.id
+		END
+		) AS pId,
+		m1. simplename AS NAME,
+		(
+		CASE
+		WHEN (m2.id = 0 OR m2.id IS
+		NULL) THEN
+		'true'
+		ELSE
+		'false'
+		END
+		) as isOpen,
+		(
+		CASE
+		WHEN (m3.deptid = 0 OR m3.deptid
+		IS NULL) THEN
+		'false'
+		ELSE
+		'true'
+		END
+		) "checked"
+		FROM
+		dept m1
+		LEFT JOIN
+		dept m2
+		ON m1.pid = m2. id
+		left join (
+		SELECT
+		deptid
+		FROM
+		sun_providerdeptrelation
+		WHERE
+		serviceproviderid =#{providerid}
+		) m3 on m1.id = m3.deptid
+		ORDER BY
+		m1.id ASC
+	</select>
+	
+	<select id="getProductcategoryByLevel" resultType="java.util.Map" parameterType="java.lang.String" >
+    select
+     id num,
+     name
+     from
+      sun_servicecategory 
+    where length(pids)-length(replace(pids,',',''))= #{level};
+    </select>
+    
+	<select id="getProductcategoryByPids" resultType="java.util.Map" parameterType="java.lang.String" >
+    select
+     id num,
+     name
+     from
+      sun_servicecategory 
+    where pid in ${pids};
+    </select>
+	
+
+	 <select id="getProductcategoryAll" resultType="java.util.Map" parameterType="java.lang.String" >
+    select
+     id num,
+     name
+     from
+      sun_servicecategory 
+    where pcode='0';
+    </select>
+    <select id="getProductcategoryByServicecategory" resultType="java.util.Map" parameterType="java.lang.String" >
+    select
+     id num,
+     name
+     from
+      sun_servicecategory 
+    where pcode='0'
+    and    servicecategory=#{servicecategory};
+    </select>
+     <select id="getProducttypeAll" resultType="java.util.Map" parameterType="java.lang.String" >
+    select
+     s1.id num,
+     s1.name
+     from
+      sun_servicecategory s1
+    where pcode in (select code from sun_servicecategory s2 where s2.pcode=0);
+    </select>
+   <select id="getProducttypeByProductcategory" resultType="java.util.Map" parameterType="java.lang.String" >
+    select
+     s1.id num,
+     s1.name
+     from
+      sun_servicecategory s1
+      	LEFT JOIN
+	 sun_servicecategory s2 on s1.pcode = s2.code
+    where s2.pcode=0  
+     and s2.id in ${productcategory}
+     ;
+    </select>
+    
+</mapper>

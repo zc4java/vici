@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cobona.vici.common.persistence.dao.SunProductMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cobona.vici.common.persistence.model.SunProduct">
+        <id column="id" property="id" />
+        <result column="productname" property="productname" />
+        <result column="servicecategory" property="servicecategory" />
+        <result column="productcategory" property="productcategory" />
+        <result column="producttype" property="producttype" />
+        <result column="productunit" property="productunit" />
+        <result column="marketprice" property="marketprice" />
+        <result column="costprice" property="costprice" />
+        <result column="saleprice" property="saleprice" />
+        <result column="remark" property="remark" />
+        <result column="isvalid" property="isvalid" />
+        <result column="providerid" property="providerid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, productname, servicecategory, productcategory, producttype, productunit, marketprice, costprice, saleprice, remark, isvalid,providerid
+    </sql>
+
+</mapper>

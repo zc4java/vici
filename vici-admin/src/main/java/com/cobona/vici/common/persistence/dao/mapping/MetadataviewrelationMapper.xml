@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cobona.vici.common.persistence.dao.MetadataviewrelationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cobona.vici.common.persistence.model.Metadataviewrelation">
+        <id column="id" property="id" />
+        <result column="viewname" property="viewname" />
+        <result column="relation" property="relation" />
+        <result column="addafter" property="addafter" />
+        <result column="mastertable" property="mastertable" />
+        <result column="deletetables" property="deletetables" />
+        <result column="addview" property="addview" />
+        <result column="editview" property="editview" />
+        <result column="listview" property="listview" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, viewname, relation, addafter, mastertable,deletetables,addview,editview,listview
+    </sql>
+    
+      <select id="getTableByViewname" resultType="java.util.Map" parameterType="java.lang.String">
+		 SELECT
+		  a.tablename num,
+          a.tablename   name
+			FROM
+			metadata a,metadataview b
+			where 1=1
+             and a.id = b.metadataid
+			 ${viewname}
+			GROUP BY
+			a.tablename
+    </select>
+      <select id="getTablenameTreeByViewname" resultType="com.cobona.vici.core.node.ZTreeNode">
+	SELECT m1.id AS id, 0 AS pId, m1.tablename AS NAME
+	, CASE 
+		WHEN m2.id = 0
+		OR m2.id IS NULL THEN 'true'
+		ELSE 'false'
+	END AS isOpen
+	, CASE 
+		WHEN m3.id IS NULL THEN 'false'
+		ELSE 'true'
+	END AS "checked"
+FROM (
+	SELECT max(id) AS id, 0 AS pid, tablename
+	FROM metadata
+	WHERE id IN (
+			SELECT metadataid AS id
+			FROM metadataview
+			WHERE  ${viewname}
+		)
+	GROUP BY tablename
+) m1
+	LEFT JOIN (
+		SELECT 0 AS id, 0 AS pid, tablename
+		FROM metadata
+		WHERE id IN (
+			SELECT metadataid AS id
+			FROM metadataview
+			WHERE  ${viewname}
+		)
+		GROUP BY tablename
+	) m2
+	ON m1.tablename = m2.tablename
+	LEFT JOIN (
+		SELECT tablename AS id, tablename
+		FROM metadata
+		WHERE id IN (
+			SELECT metadataid AS id
+			FROM metadataview
+			WHERE  ${viewname}
+		)
+		GROUP BY tablename
+	) m3
+	ON m1.tablename = m3.tablename
+ORDER BY m1.id ASC
+	</select>
+     
+</mapper>

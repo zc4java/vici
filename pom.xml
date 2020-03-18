@@ -1,0 +1,220 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<packaging>pom</packaging>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.cobona</groupId>
+	<artifactId>vici-parent</artifactId>
+	<version>1.0.1-SNAPSHOT</version>
+
+	<name>vici-parent</name>
+
+	<modules>
+		<module>vici-admin</module>
+		
+		 <module>vici-core</module> 
+		 <!-- <module>vici-rest</module> -->
+		<!--<module>vici-rest</module>
+		<module>vici-web-layui</module>-->
+		<!-- <module>vivi-admin</module>
+		<module>vici-pinggu</module>
+		<module>vici-guangji</module>
+		<module>vici-web-layui</module>
+		<module>vici-web-element</module>
+		<module>vici-ontology</module> -->
+	</modules>
+
+
+	
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.9.RELEASE</version>
+	</parent>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ViciSnapshot</id>
+			<name>Brain SNapshots</name>
+			<url>http://47.93.63.98:8099/repository/maven-snapshots/</url>
+		</snapshotRepository>
+		<repository>
+			<id>ViciRelease</id>
+			<name>Brain Release</name>
+			<url>http://47.93.63.98:8099/repository/maven-releases/</url>
+		</repository>
+	</distributionManagement>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<vici.version>1.0.1-SNAPSHOT</vici.version>
+		<mybatisplus-spring-boot-starter.version>1.0.4</mybatisplus-spring-boot-starter.version>
+		<shiro.version>1.4.0</shiro.version>
+		<mybatis-plus.version>2.1.8</mybatis-plus.version>
+		<fastjson.version>1.2.31</fastjson.version>
+		<commons.io.version>2.5</commons.io.version>
+		<velocity.version>1.7</velocity.version>
+		<kaptcha.version>2.3.2</kaptcha.version>
+		<ehcache.version>3.3.1</ehcache.version>
+		<zxing.version>3.2.1</zxing.version>
+		<druid.version>1.1.10</druid.version>
+		<beetl.version>2.7.15</beetl.version>
+		<swagger.version>2.2.2</swagger.version>
+		<commons-lang3.version>3.6</commons-lang3.version>
+		<ehcache.core.version>2.6.11</ehcache.core.version>
+		<mysql-connector-java.version>5.1.38</mysql-connector-java.version>
+		<jwt.version>0.7.0</jwt.version>
+		<ureport2.console.version>2.2.9</ureport2.console.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!--vici -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>1.5.9.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatisplus-spring-boot-starter</artifactId>
+				<version>${mybatisplus-spring-boot-starter.version}</version>
+			</dependency>
+			<!--shiro依赖 -->
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-core</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-spring</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-ehcache</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql-connector-java.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus</artifactId>
+				<version>${mybatis-plus.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid-spring-boot-starter</artifactId>
+				<version>${druid.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons.io.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.penggle</groupId>
+				<artifactId>kaptcha</artifactId>
+				<version>${kaptcha.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.ehcache</groupId>
+				<artifactId>ehcache</artifactId>
+				<version>${ehcache.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.zxing</groupId>
+				<artifactId>core</artifactId>
+				<version>${zxing.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.velocity</groupId>
+				<artifactId>velocity</artifactId>
+				<version>${velocity.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.ibeetl</groupId>
+				<artifactId>beetl</artifactId>
+				<version>${beetl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger-ui</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons-lang3.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sf.ehcache</groupId>
+				<artifactId>ehcache-core</artifactId>
+				<version>${ehcache.core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt</artifactId>
+				<version>${jwt.version}</version>
+			</dependency>
+			<dependency>
+		  <groupId>com.bstek.ureport</groupId>
+		  <artifactId>ureport2-console</artifactId>
+		  <version>${ureport2.console.version}</version>
+		</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.5</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+						<encoding>UTF-8</encoding>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>1.5.9.RELEASE</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+						<encoding>UTF-8</encoding>
+						<classifier>exec</classifier>  
+					</configuration>
+					<executions>  
+	                <execution>  
+	                    <goals>  
+	                        <goal>repackage</goal>  
+	                    </goals>  
+	                </execution>  
+	            </executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+
+</project>
+

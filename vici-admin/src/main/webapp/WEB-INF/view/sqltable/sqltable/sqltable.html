@@ -1,0 +1,46 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>sqltable管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="id" name="使用标识" />
+                            </div>
+                            <!-- 
+                            <div class="col-sm-3">
+                            	<#SelectCon id="type" name="语句类型" underline="true"/>
+                            </div>
+                             -->
+                            <div class="col-sm-3">
+                                <#NameCon id="name" name="语句名称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="Sqltable.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="SqltableTableToolbar" role="group">
+                            @if(shiro.hasPermission("/sqltable/add")){
+                                <#button name="添加" icon="fa-plus" clickFun="Sqltable.openAddSqltable()"/>
+                            @}
+                            @if(shiro.hasPermission("/sqltable/update")){
+                                <#button name="修改" icon="fa-plus" clickFun="Sqltable.openSqltableDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/sqltable/delete")){
+                                <#button name="删除" icon="fa-plus" clickFun="Sqltable.delete()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="SqltableTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/sqltable/sqltable/sqltable.js"></script>
+@}

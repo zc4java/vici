@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cobona.vici.common.persistence.dao.SunServiceproviderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cobona.vici.common.persistence.model.SunServiceprovider">
+        <id column="id" property="id" />
+        <result column="serviceprovidername" property="serviceprovidername" />
+        <result column="commercialmodel" property="commercialmodel" />
+        <result column="starlevel" property="starlevel" />
+        <result column="organizationtype" property="organizationtype" />
+        <result column="salestype" property="salestype" />
+        <result column="contactprogress" property="contactprogress" />
+        <result column="contactperson" property="contactperson" />
+        <result column="duty" property="duty" />
+        <result column="mobile" property="mobile" />
+        <result column="telephone" property="telephone" />
+        <result column="email" property="email" />
+        <result column="contactaddress" property="contactaddress" />
+        <result column="servicecontent" property="servicecontent" />
+        <result column="managementfee" property="managementfee" />
+        <result column="showcasefee" property="showcasefee" />
+        <result column="onlineshare" property="onlineshare" />
+        <result column="offlineshare" property="offlineshare" />
+        <result column="agreementdate" property="agreementdate" />
+        <result column="contractdate" property="contractdate" />
+             <result column="isvalid" property="isvalid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, serviceprovidername, commercialmodel, starlevel, organizationtype, salestype, contactprogress, contactperson, duty, mobile, telephone, email, contactaddress, servicecontent, managementfee, showcasefee, onlineshare, offlineshare, agreementdate, contractdate, isvalid
+    </sql>
+
+   <insert id="providerCateoryRelationAddByProviderId"  parameterType="java.lang.String" >
+       INSERT INTO sun_providercateoryrelation(serviceproviderid,servicecategoryid)  select ${providerid} pid ,id  from sun_servicecategory where id in (${categoryids}) ;
+     </insert>
+       <delete id="providerCateoryRelationDelByProviderId"  parameterType="java.lang.String" >
+       delete FROM  sun_providercateoryrelation where serviceproviderid= ${providerid};
+     </delete>
+     
+      <insert id="providerDeptRelationAddByProviderId"  parameterType="java.lang.String" >
+       INSERT INTO sun_providerdeptrelation(serviceproviderid,deptid)  select ${providerid} pid ,id  from dept where id in (${deptids}) ;
+     </insert>
+       <delete id="providerDeptRelationDelByProviderId"  parameterType="java.lang.String" >
+       delete FROM  sun_providerdeptrelation where serviceproviderid= ${providerid};
+     </delete>
+     <update id="providerDeptRelationInvalidByProviderId"  parameterType="java.lang.String" >
+     update  sun_serviceprovider set  isvalid = 0  where id =${providerid} ;
+     </update>
+     
+     <select id="providernameid" resultType="java.util.Map" parameterType="java.lang.String" >
+    select
+     id num,
+     serviceprovidername name
+     from
+      sun_serviceprovider 
+
+     </select>
+</mapper>

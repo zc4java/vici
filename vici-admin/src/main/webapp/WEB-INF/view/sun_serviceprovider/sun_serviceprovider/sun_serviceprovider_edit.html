@@ -1,0 +1,73 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="serviceproviderForm">
+
+            <input type="hidden" id="id" value="${item.id}">
+           <input type="hidden" id="commercialmodelhid" value="${item.commercialmodel}">
+           <input type="hidden" id="starlevelhid" value="${item.starlevel}">
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="serviceprovidername" name="服务商名称" value="${item.serviceprovidername}" underline="true"/>
+                            <#select id="commercialmodel" name="商务模式" value="${item.commercialmodel}"  underline="true">
+						    </#select>
+                            <#select id="starlevel" name="星级" value="${item.starlevel}"  underline="true">
+						    </#select>
+                            <#input id="organizationtype" name="组织类型" value="${item.organizationtype}" underline="true"/>
+                            <#input id="salestype" name="销售模式" value="${item.salestype}" underline="true"/>
+                            <#input id="contactprogress" name="洽谈进度" value="${item.contactprogress}" underline="true"/>
+                            <#input id="contactperson" name="联系人" value="${item.contactperson}" underline="true"/>
+                            <#input id="duty" name="职务" value="${item.duty}" underline="true"/>
+                            <#input id="mobile" name="联系电话" value="${item.mobile}" />
+                            <#input id="serviceCategoryService" name="服务类型" readonly="readonly" 
+							clickFun="Sun_serviceproviderInfoDlg.showCategorySelectTreebyid(); return false;"
+							style="background-color: #ffffff !important;"/>
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="telephone" name="固定电话" value="${item.telephone}" underline="true"/>
+                            <#input id="email" name="邮箱" value="${item.email}" underline="true"/>
+                            <#input id="contactaddress" name="联系地址" value="${item.contactaddress}" underline="true"/>
+                            <#input id="servicecontent" name="服务内容" value="${item.servicecontent}" underline="true"/>
+                            <#input id="managementfee" name="管理年费" value="${item.managementfee}" underline="true"/>
+                            <#input id="showcasefee" name="展柜年费" value="${item.showcasefee}" underline="true"/>
+                            <#input id="onlineshare" name="线上分成" value="${item.onlineshare}" underline="true"/>
+                            <#input id="offlineshare" name="线下分成" value="${item.offlineshare}" underline="true"/>
+                              <#input id="agreementdate" name="协议日期" value="${item.agreementdate}" underline="true" type="date"
+								clickFun="laydate({istime: false, format: 'YYYY-MM-DD'})"/>
+                            <#input id="contractdate" name="签约日期" value="${item.contractdate}" type="date"
+								clickFun="laydate({istime: false, format: 'YYYY-MM-DD'})"/>
+							 <#input id="serviceDeptService" name="区域" readonly="readonly" 
+							clickFun="Sun_serviceproviderInfoDlg.showDeptSelectTreebyid(); return false;"
+							style="background-color: #ffffff !important;"/>
+                </div>
+                
+              <div id="serviceCategoryServiceContent" class="menuContent"
+				style=" display: none; position: absolute; z-index: 200;">
+				<ul id="ztreeCecategoryByid" class="ztree tree-box" style="width: 250px !important;"></ul>
+			</div>
+			<div id="serviceProductServiceContent" class="menuContent"
+				style=" display: none; position: absolute; z-index: 200;">
+				<ul id="ztreeProductByid" class="ztree tree-box" style="width: 250px !important;"></ul>
+			</div>
+			<div id="serviceOtherServiceContent" class="menuContent"
+				style=" display: none; position: absolute; z-index: 200;">
+				<ul id="ztreeOtherByid" class="ztree tree-box" style="width: 250px !important;"></ul>
+			</div>
+			<div id="serviceDeptServiceContent" class="menuContent"
+				style=" display: none; position: absolute; z-index: 200;">
+				<ul id="ztreeDeptByid" class="ztree tree-box" style="width: 250px !important;"></ul>
+			</div>
+           
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="Sun_serviceproviderInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="Sun_serviceproviderInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/sun_serviceprovider/sun_serviceprovider/sun_serviceprovider_info.js"></script>
+@}

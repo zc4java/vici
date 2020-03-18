@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cobona.vici.modular.system.dao.SuperDao">
+	<!-- <resultMap type="com.cobona.vici.common.persistence.model.User"
+		id="userResultMap">
+		<id column="id" property="id" jdbcType="INTEGER" />
+	</resultMap> -->
+	<select id="selectListPage" resultType="map">
+		${sql}
+	</select>
+
+	<select id="selectViewListPage" resultType="map">
+		${sql}
+	</select>
+
+	<select id="selectList" resultType="map">
+		${sql}
+	</select>
+
+
+
+	<delete id="delete">
+		${sql}
+	</delete>
+
+	<update id="update">
+		${sql}
+	</update>
+	<insert id="insert">
+		${sql}
+	</insert>
+	<insert id="insertAndGetId">
+		${sql}
+	</insert>
+	<delete id="deleteListByKey" statementType="STATEMENT">
+		delete from ${tablename} where ${keyfield} in
+		<choose>
+			<when test="keyType.toString()== 'INT'">
+				<foreach collection="keys" item="arr" index="no" open="(" separator="," close=")">
+					${arr}
+				</foreach>
+			</when>
+			<when test="keyType.toString() == 'STRING'">
+				<foreach collection="keys" item="arr" index="no" open="(" separator="," close=")">
+					'${arr}'
+				</foreach>
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</delete>
+</mapper>

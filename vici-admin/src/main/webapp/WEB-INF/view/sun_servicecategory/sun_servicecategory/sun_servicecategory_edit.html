@@ -1,0 +1,38 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${item.id}">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                             <#input id="name" name="名称" value="${item.name}" underline="true"/>
+                             <#input id="num" name="排列序号" value="${item.num}" underline="true"/>
+                </div>
+
+                <div class="col-sm-6">
+                          <#input id="serviceCategoryService" name="服务类型" readonly="readonly"  hidden="pid"
+                                hiddenValue="${item.pid}" value="${pName}"
+							clickFun="Sun_servicecategoryInfoDlg.showCategorySelectTree(); return false;"
+							style="background-color: #ffffff !important;"/>
+                           
+                           
+                </div>
+            </div>
+            <div id="serviceCategoryServiceContent" class="menuContent"
+				style=" display: none; position: absolute; z-index: 200;">
+				<ul id="ztreeCecategory"  class="ztree tree-box" style="width: 250px !important;"></ul>
+			</div>
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="Sun_servicecategoryInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="Sun_servicecategoryInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/sun_servicecategory/sun_servicecategory/sun_servicecategory_info.js"></script>
+@}

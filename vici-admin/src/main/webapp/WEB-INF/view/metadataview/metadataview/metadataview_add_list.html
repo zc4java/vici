@@ -1,0 +1,44 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <div class="col-sm-3 ">
+                 <#NameCon id="viewname" name="视图名" />
+                 </div>
+                  <div class="col-sm-3"> 
+                   <#NameCon id="viewnamecn" name="视图中文" />
+                 </div >
+                   <div class="col-sm-3">
+                    <#SelectCon id="tablename" name="数据库表" underline="true" onchangeFun="MetadataviewInfoDlg.changetablename(this)"/>
+                 </div >
+                  <div class="col-sm-3">
+                    <#SelectCon id="metadataid" name="字段名" underline="true" onchangeFun="MetadataviewInfoDlg.changetableid(this)"/>
+                 </div >
+                  <div class="col-sm-3"> 
+                    <#NameCon id="fieldtitle" name="字段注释" underline="true"/>
+                 </div >
+                  <div class="col-sm-3">
+                   <#button name="新增行" icon="fa-plus" clickFun="MetadataviewInfoDlg.AddMetadata()"/>
+                   <#button name="删除行" icon="fa-remove" clickFun="MetadataviewInfoDlg.DelMetadata()"/>
+               </div>
+            </div>
+           <div class="table-responsive">  
+           <#table id="MetadataViewTable" style="word-break:break-all; word-wrap:break-all;"/>
+           </div>
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+              		<#button btnCss="info" name="保存" id="save" icon="fa-check" clickFun="MetadataviewInfoDlg.addSave()"/>
+                    <#button btnCss="info" name="保存并关闭" id="ensure" icon="fa-check" clickFun="MetadataviewInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="MetadataviewInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/metadataview/metadataview/metadataview_info_list.js"></script>
+@}

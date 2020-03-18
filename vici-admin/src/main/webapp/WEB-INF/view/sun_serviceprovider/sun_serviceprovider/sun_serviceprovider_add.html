@@ -1,0 +1,113 @@
+@layout("/common/_container.html"){
+
+<script type="text/javascript">
+    $(function () {
+        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+
+
+        initZtree();
+    });
+
+    function initZtree() {
+        var setting = {
+            check: {
+                enable: true,
+                chkboxType: { "Y": "ps", "N": "ps" }
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+
+       // var ztree = new $ZTree("zTree", "/menu/menuTreeListByRoleId/"
+          //  + "1");
+       // ztree.setSettings(setting);
+       // ztree.init();
+    }
+</script>
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="serviceproviderForm">
+
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="serviceprovidername" name="服务商名称" underline="true"/>
+                            <#select id="commercialmodel" name="商务模式" underline="true"  >
+						    </#select>
+                            <#select id="starlevel" name="服务商星级" underline="true">
+						    </#select>
+                            <#input id="organizationtype" name="组织类型" underline="true"/>
+                            <#input id="salestype" name="销售模式" underline="true"/>
+                            <#input id="contactprogress" name="洽谈进度" underline="true"/>
+                            <#input id="contactperson" name="联系人" underline="true"/>
+                            <#input id="duty" name="职务" underline="true"/>
+                            <#input id="mobile" name="联系电话"/>
+                            <#input id="serviceCategoryService" name="服务类型" readonly="readonly" 
+							clickFun="Sun_serviceproviderInfoDlg.showCategorySelectTree(); return false;"
+							style="background-color: #ffffff !important;"/>
+						  <!--   <#input id="serviceOtherService" name="其他类型" readonly="readonly" 
+							clickFun="Sun_serviceproviderInfoDlg.showOtherSelectTree(); return false;"
+							style="background-color: #ffffff !important;"/>
+							 <#input id="serviceProductService" name="产品类型" readonly="readonly" 
+							clickFun="Sun_serviceproviderInfoDlg.showProductSelectTree(); return true;"
+							style="background-color: #ffffff !important;"/>
+							-->
+
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="telephone" name="固定电话" underline="true"/>
+                            <#input id="email" name="邮箱" underline="true"/>
+                            <#input id="contactaddress" name="联系地址" underline="true"/>
+                            <#input id="servicecontent" name="服务内容" underline="true"/>
+                            <#input id="managementfee" name="管理年费" underline="true"/>
+                            <#input id="showcasefee" name="展柜年费" underline="true"/>
+                            <#input id="onlineshare" name="线上分成" underline="true"/>
+                            <#input id="offlineshare" name="线下分成" underline="true"/>
+                            <#input id="agreementdate" name="协议日期" underline="true" type="date"
+								clickFun="laydate({istime: false, format: 'YYYY-MM-DD'})"/>
+                            <#input id="contractdate" name="签约日期" underline="true" type="date"
+								clickFun="laydate({istime: false, format: 'YYYY-MM-DD'})"/>
+                             <#input id="serviceDeptService" name="区域" readonly="readonly" 
+							clickFun="Sun_serviceproviderInfoDlg.showDeptSelectTree(); return false;"
+							style="background-color: #ffffff !important;"/>
+						
+                </div>
+                
+         
+			<div id="serviceCategoryServiceContent" class="menuContent"
+				style=" display: none; position: absolute; z-index: 200;">
+				<ul id="ztreeCecategory"  class="ztree tree-box" style="width: 250px !important;"></ul>
+			</div>
+			<div id="serviceProductServiceContent" class="menuContent"
+				style=" display: none; position: absolute; z-index: 200;">
+				<ul id="ztreeProduct" class="ztree tree-box" style="width: 250px !important;"></ul>
+			</div>
+			<div id="serviceOtherServiceContent" class="menuContent"
+				style=" display: none; position: absolute; z-index: 200;">
+				<ul id="ztreeOther" class="ztree tree-box" style="width: 250px !important;"></ul>
+			</div>
+			<div id="serviceDeptServiceContent" class="menuContent"
+				style=" display: none; position: absolute; z-index: 200;">
+				<ul id="ztreeDept" class="ztree tree-box" style="width: 250px !important;"></ul>
+			</div>
+			
+           
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="Sun_serviceproviderInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="Sun_serviceproviderInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/sun_serviceprovider/sun_serviceprovider/sun_serviceprovider_info.js"></script>
+@}

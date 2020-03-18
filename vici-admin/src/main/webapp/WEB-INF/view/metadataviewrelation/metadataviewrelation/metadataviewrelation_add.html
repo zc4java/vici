@@ -1,0 +1,124 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="">
+             <input type="hidden" id="viewname" value="">
+            <div class="row">
+                <div class="col-sm-3">
+                            <#select id="viewnameselect" name="视图名" underline="true" onchangeFun="MetadataviewrelationInfoDlg.changeviewname(this)"/>
+                 </div>
+                 <div class="col-sm-3">
+                     <#select id="mastertable" name="主表，唯一id所在到表" underline="true"/> 
+                </div>
+                <div class="col-sm-3">
+                     <#input id="deletetables" name="删除操作表名" readonly="readonly" 
+							clickFun="MetadataviewrelationInfoDlg.showTableSelectTree(); return false;"
+							style="background-color: #ffffff !important;" underline="true" />
+                </div>
+                <div class="col-sm-3">
+                 	 <#input id="addview" name="新增页面" underline="true" />
+                </div>
+               </div>
+                
+                <div class="row">
+                <div class="col-sm-3 b-r">
+                     <#input id="editview" name="修改页面" underline="true" />      
+                </div>
+                 <div class="col-sm-3">
+                 	<#input id="listview" name="列表页面" underline="true" />
+                 </div>
+                 <div class="col-sm-3">
+                 	<#input id="detailview" name="详情页面" underline="true" />
+                 </div>
+                 <div class="col-sm-3">
+                 	<#input id="orderfield" name="排序字段" underline="true" />
+                 </div>
+
+                 
+               </div>
+                <div class="row">
+                                            
+               <div class="col-sm-3">
+                  <#input id="rowclickevent" name="表格行点击事件" underline="true" /> 
+               </div>
+               <div class="col-sm-3">
+                   <#select id="toolbar" name="是否开启工具栏" underline="true"/> 
+               </div>
+               <div class="col-sm-3">
+                   <#input id="toolbarwidth" name="表格行宽度" underline="true"/> 
+               </div>
+
+
+                 
+                 
+               </div>
+                 <div class="row">
+                <div class="col-sm-3">
+                            <#select id="relation_rel" name="逻辑关系" underline="true"/>
+                            <#select id="relation_left_table" name="左侧表" underline="true"  onchangeFun="MetadataviewrelationInfoDlg.changeReltaionLeftTable(this)"/>
+                            <#select id="relation_left_col" name="左侧字段" underline="true"/> 
+                </div>
+                <div class="col-sm-3">
+                            <#select id="relation_sign" name="关系" underline="true"/> 
+                            <#select id="relation_right_table" name="右侧表" underline="true" onchangeFun="MetadataviewrelationInfoDlg.changeReltaionRightTable(this)"/> 
+                            <#select id="relation_right_col" name="右侧字段" underline="true"/> 
+                            <#button btnCss="info" name="添加到关系" id="addrelation" icon="fa-check" clickFun="MetadataviewrelationInfoDlg.addrelation()"/>
+                 </div>            
+            
+
+               
+				<div class="col-sm-3">			 
+							<#select id="addafter_table" name="执行更新的表" underline="true" onchangeFun="MetadataviewrelationInfoDlg.changeAddafterTable(this)"/> 
+							<#select id="addafter_left_col" name="需要更新的字段" underline="true"/> 
+							<#select id="addafter_right_table" name="值所在表" underline="true" onchangeFun="MetadataviewrelationInfoDlg.changeAddafterRightTable(this)"/> 
+							<#select id="addafter_right_col" name="更新的值" underline="true" /> 
+						
+							
+						
+							
+							
+                </div>
+                <div class="col-sm-3">			
+                        	<#select id="addafter_where_left_col" name="条件字段" underline="true"/> 
+							<#select id="addafter_where_table" name="值所在表" underline="true" onchangeFun="MetadataviewrelationInfoDlg.changeAddafterWhereTable(this)"/>
+							<#select id="addafter_where_right_col" name="条件的值" underline="true"/> 
+							<#button btnCss="info" name="添加到关系" id="addafterbutton" icon="fa-check" clickFun="MetadataviewrelationInfoDlg.addafter()"/>
+                </div>	
+                	
+               <div class="col-sm-6">
+                   <#textarea id="relation" name="视图中的表关联"/>
+               </div>
+               
+                <div class="col-sm-6">	
+                <#textarea id="addafter" name="更新后执行语句"  underline="true" />
+                 </div>
+               <div class="col-sm-6">
+                   <#textarea id="toolbarscript" name="工具栏代码"/>
+               </div>
+                
+               <div class="col-sm-6">
+                   <#textarea id="selectplus" name="查询条件扩展字段"/>
+               </div>
+               
+                  </div>
+            </div>
+            
+               <div id="deletetablesContent" class="menuContent"
+				style=" display: none; position: absolute; z-index: 200;">
+				<ul id="ztreeDeletetables"  class="ztree tree-box" style="width: 250px !important;"></ul>
+			</div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="MetadataviewrelationInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="MetadataviewrelationInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/metadataviewrelation/metadataviewrelation/metadataviewrelation_info.js"></script>
+@}

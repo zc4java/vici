@@ -1,0 +1,56 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="">
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="viewname" name="视图名" underline="true"/>
+                            <#select id="viewnameselect" name="已有视图名" underline="true" onchangeFun="MetadataviewInfoDlg.changeviewname(this)"/>
+                            <#input id="viewnamecn" name="视图名中文" underline="true"/>
+                            <#select id="tablename" name="数据库表" underline="true" onchangeFun="MetadataviewInfoDlg.changetablename(this)"/>
+                            <#select id="metadataid" name="字段名" underline="true" onchangeFun="MetadataviewInfoDlg.changetableid(this)"/>
+                           、                                                                  <#input id="fieldtitle" name="字段注释" underline="true"/>
+                           <input id="metadataids" name="多选字段" readonly="readonly"  type="hidden"
+							clickFun="MetadataviewInfoDlg.showTableidsSelectTree(); return false;"
+							style="background-color: #ffffff !important;"/>
+						   <#select id="issort" name="开启列表排序" underline="true"/>
+                           <#select id="imp" name="excel导入" underline="true"/>
+                           <#select id="exp" name="excel导出" underline="true"/>
+                           <#select id="readonly" name="是否只读" underline="true"/>
+							
+                         
+                </div>
+
+                <div class="col-sm-6">
+                            <#select id="display" name="是否在列表展示" underline="true"/>
+                             <#select id="update" name="是否在更新页面展示" underline="true"/>
+                             <#select id="add" name="是否在添加页面展示" underline="true"/>
+                             <#select id="isselect" name="是否可查询"/>
+                             <#input id="onclick" name="鼠标单击执行方法" underline="true"/>
+                            <#input id="ondblclick" name="鼠标双击执行方法" underline="true"/>
+                            <#input id="onfocus" name="当元素获得焦点时执行方法" underline="true"/>
+                            <#input id="onblur" name="元素失去焦点时执行方法" underline="true"/>
+                            <#input id="fieldsort" name="字段页面显示顺序" underline="true"/>
+                            <#select id="viewid" name="是否为主id" underline="true"/>
+                </div>
+            </div>
+            
+            <div id="metadataidsContent" class="menuContent"
+				style=" display: none; position: absolute; z-index: 200;">
+				<ul id="ztreeMetadataids"  class="ztree tree-box" style="width: 250px !important;"></ul>
+			</div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="MetadataviewInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="MetadataviewInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/metadataview/metadataview/metadataview_info_list.js"></script>
+@}

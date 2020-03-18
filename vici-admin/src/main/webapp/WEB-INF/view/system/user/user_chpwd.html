@@ -1,0 +1,94 @@
+@layout("/common/_container.html"){
+<style>
+.w83{
+width:83.3%;
+}
+.label_custom {
+	float: left;
+	padding-top: 7px;
+	width:25%;
+	text-align:right;
+}
+.input_custom {
+	float: left;
+	width:75%;
+}
+</style>
+<div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <div class="row row-lg">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content" style="border:none !important; ">
+                            <div class="form-horizontal">
+                                <div class="row">
+								<div class="col-sm-10 pull-left w83">
+									<!--[if lt IE 9]>
+									<div class="form-group">
+										<label class="col-sm-3 label_custom control-label">原密码</label>
+										<div class="col-sm-9 input_custom">
+											<input class="form-control" id="oldPwd" name="oldPwd"
+												type="password">
+
+										</div>
+									</div>
+									<div class="hr-line-dashed"></div>
+
+
+									<div class="form-group">
+										<label class="col-sm-3 label_custom control-label">新密码</label>
+										<div class="col-sm-9 input_custom">
+											<input class="form-control" id="newPwd" name="newPwd"
+												type="password">
+
+										</div>
+									</div>
+									<div class="hr-line-dashed"></div>
+
+
+									<div class="form-group">
+										<label class="col-sm-3 label_custom control-label">新密码验证</label>
+										<div class="col-sm-9 input_custom">
+											<input class="form-control" id="rePwd" name="rePwd"
+												type="password">
+
+										</div>
+									</div>
+									<![endif]-->
+									<!--[if gte IE 9]><!-->
+										<#input id="oldPwd" name="原密码" underline="true" type="password"/>
+                                        <#input id="newPwd" name="新密码" underline="true" type="password" />
+                                        <#input id="rePwd" name="新密码验证" type="password"/>
+									<!--<![endif]-->
+
+								</div>
+							</div>
+                                <div class="row btn-group-m-t">
+                                    <div style="text-align: center;">
+                                        <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="UserInfoDlg.chPwd()"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+	
+
+<script src="${ctxPath}/static/modular/system/user/user_info.js"></script>
+
+<script>
+/**
+ * 验证密码
+ */
+	
+$("#newPwd").blur(function(){
+		UserInfoDlg.chePwd();
+	});
+
+</script>
+
+@}
